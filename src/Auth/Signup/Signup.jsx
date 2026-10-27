@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   FiUser,
   FiMail,
@@ -21,6 +21,8 @@ function Signup() {
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
 
+  const navigate = useNavigate();
+
   const handleSignup = async (e) => {
     e.preventDefault();
 
@@ -40,20 +42,17 @@ function Signup() {
     setLoading(true);
 
     try {
-      const response = await fetch(
-        "http://localhost:5000/api/auth/signup",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            name: name.trim(),
-            email: email.trim().toLowerCase(),
-            password,
-          }),
-        }
-      );
+      const response = await fetch("/api/auth/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: name.trim(),
+          email: email.trim().toLowerCase(),
+          password,
+        }),
+      });
 
       const data = await response.json();
 
@@ -61,9 +60,7 @@ function Signup() {
         throw new Error(data.message || "Signup failed.");
       }
 
-      setMessage(
-        data.message || "Account created successfully!"
-      );
+      setMessage(data.message || "Account created successfully!");
 
       setName("");
       setEmail("");
@@ -71,12 +68,14 @@ function Signup() {
       setShowPassword(false);
 
       // Redirect to Login after successful signup
-      window.location.href = "/login";
+      navigate("/login", { replace: true });
     } catch (err) {
+      console.error("Signup error:", err);
+
       setError(
         err.message === "Failed to fetch"
           ? "Unable to connect to the server. Please try again."
-          : err.message
+          : err.message || "Signup failed. Please try again."
       );
     } finally {
       setLoading(false);
@@ -86,7 +85,6 @@ function Signup() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-slate-50 px-4 py-10">
       <div className="grid w-full max-w-5xl overflow-hidden rounded-3xl bg-white shadow-xl md:grid-cols-2">
-
         {/* Left panel */}
         <div className="hidden flex-col justify-between bg-gradient-to-br from-indigo-600 to-violet-800 p-10 text-white md:flex">
           <Link to="/" className="text-2xl font-extrabold">
@@ -227,7 +225,7 @@ function Signup() {
               </div>
             </div>
 
-            {/* Success and error messages */}
+            {/* Success message */}
             {message && (
               <p
                 role="status"
@@ -237,6 +235,7 @@ function Signup() {
               </p>
             )}
 
+            {/* Error message */}
             {error && (
               <p
                 role="alert"

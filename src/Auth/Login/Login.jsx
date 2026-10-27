@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { GoogleLogin } from "@react-oauth/google";
@@ -19,10 +20,7 @@ function Login() {
 
   const navigate = useNavigate();
 
-  // ==========================================
   // SAVE LOGIN AND REDIRECT
-  // ==========================================
-
   const saveLoginAndRedirect = (data) => {
     if (!data?.token || !data?.user) {
       setError("Login response mein token ya user data nahi mila.");
@@ -49,30 +47,24 @@ function Login() {
     }
   };
 
-  // ==========================================
   // EMAIL / PASSWORD LOGIN
   // POST /api/auth/login
-  // ==========================================
-
   const handleLogin = async (e) => {
     e.preventDefault();
     setError("");
     setLoading(true);
 
     try {
-      const response = await fetch(
-        "http://localhost:5000/api/auth/login",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            email: email.trim(),
-            password,
-          }),
-        }
-      );
+      const response = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: email.trim(),
+          password,
+        }),
+      });
 
       const data = await response.json();
 
@@ -92,11 +84,8 @@ function Login() {
     }
   };
 
-  // ==========================================
   // GOOGLE LOGIN
   // POST /api/auth/google
-  // ==========================================
-
   const handleGoogleSuccess = async (credentialResponse) => {
     setError("");
 
@@ -108,18 +97,15 @@ function Login() {
     setGoogleLoading(true);
 
     try {
-      const response = await fetch(
-        "http://localhost:5000/api/auth/google",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            credential: credentialResponse.credential,
-          }),
-        }
-      );
+      const response = await fetch("/api/auth/google", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          credential: credentialResponse.credential,
+        }),
+      });
 
       const data = await response.json();
 
@@ -140,10 +126,7 @@ function Login() {
     }
   };
 
-  // ==========================================
   // UI
-  // ==========================================
-
   return (
     <div className="flex min-h-screen items-center justify-center bg-slate-50 px-4 py-10">
       <div className="grid w-full max-w-5xl overflow-hidden rounded-3xl bg-white shadow-xl md:grid-cols-2">
