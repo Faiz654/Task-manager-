@@ -10,7 +10,7 @@ import {
   FiX,
 } from "react-icons/fi";
 
-const API_URL = "http://localhost:5000/api/tasks";
+const API_URL = "/api/tasks";
 
 const emptyForm = {
   title: "",

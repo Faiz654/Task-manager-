@@ -10,7 +10,7 @@ import {
   FiAlertCircle,
 } from "react-icons/fi";
 
-const API_URL = "http://localhost:5000/api/auth";
+const API_URL = "/api/auth";
 
 function ResetPassword() {
   const { token } = useParams();
@@ -76,7 +76,6 @@ function ResetPassword() {
       setPassword("");
       setConfirmPassword("");
 
-      // Success message show karne ke baad login page par bhejna
       setTimeout(() => {
         navigate("/login", { replace: true });
       }, 2500);
@@ -170,10 +169,16 @@ function ResetPassword() {
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                aria-label={showPassword ? "Hide password" : "Show password"}
+                aria-label={
+                  showPassword ? "Hide password" : "Show password"
+                }
                 className="text-slate-400 hover:text-indigo-600"
               >
-                {showPassword ? <FiEyeOff size={19} /> : <FiEye size={19} />}
+                {showPassword ? (
+                  <FiEyeOff size={19} />
+                ) : (
+                  <FiEye size={19} />
+                )}
               </button>
             </div>
           </div>

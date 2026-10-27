@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import {
@@ -8,7 +9,7 @@ import {
   FiLoader,
 } from "react-icons/fi";
 
-const API_URL = "http://localhost:5000/api/auth";
+const API_URL = "/api/auth";
 
 function ForgotPassword() {
   const [email, setEmail] = useState("");

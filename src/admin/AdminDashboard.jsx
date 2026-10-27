@@ -1,3 +1,4 @@
+
 import { useCallback, useEffect, useState } from "react";
 import {
   FiUsers,
@@ -8,7 +9,7 @@ import {
   FiAlertCircle,
 } from "react-icons/fi";
 
-const API_URL = "http://localhost:5000/api/admin";
+const API_URL = "/api/admin";
 
 function AdminDashboard() {
   const [users, setUsers] = useState([]);
@@ -49,20 +50,31 @@ function AdminDashboard() {
       const tasksData = await tasksResponse.json();
 
       if (!usersResponse.ok || !tasksResponse.ok) {
-        const message =
-          !usersResponse.ok
-            ? usersData.message
-            : tasksData.message;
+        const message = !usersResponse.ok
+          ? usersData.message
+          : tasksData.message;
 
-        if (usersResponse.status === 401 || tasksResponse.status === 401) {
-          throw new Error("Session invalid ya expire ho gaya. Dobara login karein.");
+        if (
+          usersResponse.status === 401 ||
+          tasksResponse.status === 401
+        ) {
+          throw new Error(
+            "Session invalid ya expire ho gaya. Dobara login karein."
+          );
         }
 
-        if (usersResponse.status === 403 || tasksResponse.status === 403) {
-          throw new Error("Admin access required. Is account ka role admin hona chahiye.");
+        if (
+          usersResponse.status === 403 ||
+          tasksResponse.status === 403
+        ) {
+          throw new Error(
+            "Admin access required. Is account ka role admin hona chahiye."
+          );
         }
 
-        throw new Error(message || "Dashboard data fetch nahi ho saka.");
+        throw new Error(
+          message || "Dashboard data fetch nahi ho saka."
+        );
       }
 
       setUsers(Array.isArray(usersData.users) ? usersData.users : []);
@@ -80,9 +92,13 @@ function AdminDashboard() {
     fetchDashboardData();
   }, [fetchDashboardData]);
 
-  const hiddenTasks = tasks.filter((task) => task.isHidden === true).length;
+  const hiddenTasks = tasks.filter(
+    (task) => task.isHidden === true
+  ).length;
+
   const completedTasks = tasks.filter(
-    (task) => task.status === "Completed" || task.completed === true
+    (task) =>
+      task.status === "Completed" || task.completed === true
   ).length;
 
   const stats = [
@@ -146,7 +162,9 @@ function AdminDashboard() {
           disabled={refreshing}
           className="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-slate-700 shadow-sm transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-60"
         >
-          <FiRefreshCw className={refreshing ? "animate-spin" : ""} />
+          <FiRefreshCw
+            className={refreshing ? "animate-spin" : ""}
+          />
           {refreshing ? "Refreshing..." : "Refresh Data"}
         </button>
       </div>
@@ -157,7 +175,10 @@ function AdminDashboard() {
           className="flex flex-col gap-3 rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700 sm:flex-row sm:items-center sm:justify-between"
         >
           <div className="flex items-start gap-2">
-            <FiAlertCircle className="mt-0.5 shrink-0" size={18} />
+            <FiAlertCircle
+              className="mt-0.5 shrink-0"
+              size={18}
+            />
             <p>{error}</p>
           </div>
 
@@ -209,7 +230,9 @@ function AdminDashboard() {
           </p>
 
           {users.length === 0 ? (
-            <p className="py-8 text-sm text-slate-500">No users found.</p>
+            <p className="py-8 text-sm text-slate-500">
+              No users found.
+            </p>
           ) : (
             <div className="mt-5 space-y-4">
               {users.slice(0, 5).map((user) => (
@@ -250,7 +273,9 @@ function AdminDashboard() {
           </p>
 
           {tasks.length === 0 ? (
-            <p className="py-8 text-sm text-slate-500">No tasks found.</p>
+            <p className="py-8 text-sm text-slate-500">
+              No tasks found.
+            </p>
           ) : (
             <div className="mt-5 space-y-4">
               {tasks.slice(0, 5).map((task) => (
@@ -267,7 +292,10 @@ function AdminDashboard() {
                       {task.title}
                     </p>
                     <p className="mt-1 text-xs text-slate-500">
-                      Owner: {task.user?.name || task.user?.email || "Unknown"}
+                      Owner:{" "}
+                      {task.user?.name ||
+                        task.user?.email ||
+                        "Unknown"}
                     </p>
                   </div>
 
@@ -278,7 +306,9 @@ function AdminDashboard() {
                         : "bg-emerald-50 text-emerald-700"
                     }`}
                   >
-                    {task.isHidden ? "Hidden" : task.status || "Pending"}
+                    {task.isHidden
+                      ? "Hidden"
+                      : task.status || "Pending"}
                   </span>
                 </div>
               ))}

@@ -11,7 +11,7 @@ import {
   FiLoader,
 } from "react-icons/fi";
 
-const API_URL = "http://localhost:5000/api/users";
+const API_URL = "/api/users";
 
 const emptyProfile = {
   name: "",
@@ -130,16 +130,21 @@ function Profile() {
         throw new Error(data.message || "Profile update failed.");
       }
 
-      // Clear all fields only after successful saving
-      setProfile({ ...emptyProfile });
+      // Keep the saved profile data visible
+      if (data.user) {
+        setProfile({
+          name: data.user.name || "",
+          email: data.user.email || "",
+          phone: data.user.phone || "",
+          location: data.user.location || "",
+          bio: data.user.bio || "",
+        });
+      }
 
-      toast.success(
-        data.message || "Profile saved successfully!",
-        {
-          duration: 3000,
-          position: "top-right",
-        }
-      );
+      toast.success(data.message || "Profile saved successfully!", {
+        duration: 3000,
+        position: "top-right",
+      });
     } catch (error) {
       toast.error(error.message || "Failed to save profile.");
     } finally {
@@ -206,7 +211,6 @@ function Profile() {
         );
       }
 
-      // Clear password fields after successful update
       setPasswords({ ...emptyPasswords });
 
       toast.success(

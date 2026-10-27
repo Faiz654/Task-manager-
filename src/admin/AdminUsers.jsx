@@ -1,3 +1,4 @@
+
 import { useCallback, useEffect, useState } from "react";
 import {
   FiUsers,
@@ -9,7 +10,7 @@ import {
   FiCheckCircle,
 } from "react-icons/fi";
 
-const API_URL = "http://localhost:5000/api/admin";
+const API_URL = "/api/admin";
 
 function AdminUsers() {
   const [users, setUsers] = useState([]);
@@ -37,6 +38,7 @@ function AdminUsers() {
     }
 
     setError("");
+    setSuccess("");
 
     try {
       const response = await fetch(`${API_URL}/users`, {
@@ -50,11 +52,15 @@ function AdminUsers() {
 
       if (!response.ok) {
         if (response.status === 401) {
-          throw new Error("Session invalid ya expire ho gaya. Dobara login karein.");
+          throw new Error(
+            "Session invalid ya expire ho gaya. Dobara login karein."
+          );
         }
 
         if (response.status === 403) {
-          throw new Error("Admin access required. Is account ka role admin hona chahiye.");
+          throw new Error(
+            "Admin access required. Is account ka role admin hona chahiye."
+          );
         }
 
         throw new Error(data.message || "Users fetch nahi ho sake.");
@@ -113,7 +119,9 @@ function AdminUsers() {
 
       if (!response.ok) {
         if (response.status === 401) {
-          throw new Error("Session invalid ya expire ho gaya. Dobara login karein.");
+          throw new Error(
+            "Session invalid ya expire ho gaya. Dobara login karein."
+          );
         }
 
         if (response.status === 403) {
@@ -123,7 +131,6 @@ function AdminUsers() {
         throw new Error(data.message || "User role update nahi ho saka.");
       }
 
-      // Update the user in local state without reloading the page.
       setUsers((currentUsers) =>
         currentUsers.map((item) =>
           item._id === user._id

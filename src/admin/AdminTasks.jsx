@@ -1,3 +1,4 @@
+
 import { useCallback, useEffect, useMemo, useState } from "react";
 import {
   FiCheckSquare,
@@ -10,7 +11,7 @@ import {
   FiFilter,
 } from "react-icons/fi";
 
-const API_URL = "http://localhost:5000/api/admin";
+const API_URL = "/api/admin";
 
 function AdminTasks() {
   const [tasks, setTasks] = useState([]);
@@ -53,11 +54,15 @@ function AdminTasks() {
 
       if (!response.ok) {
         if (response.status === 401) {
-          throw new Error("Session invalid ya expire ho gaya. Dobara login karein.");
+          throw new Error(
+            "Session invalid ya expire ho gaya. Dobara login karein."
+          );
         }
 
         if (response.status === 403) {
-          throw new Error("Admin access required. Is account ka role admin hona chahiye.");
+          throw new Error(
+            "Admin access required. Is account ka role admin hona chahiye."
+          );
         }
 
         throw new Error(data.message || "Tasks fetch nahi ho sake.");
@@ -117,14 +122,20 @@ function AdminTasks() {
 
       if (!response.ok) {
         if (response.status === 401) {
-          throw new Error("Session invalid ya expire ho gaya. Dobara login karein.");
+          throw new Error(
+            "Session invalid ya expire ho gaya. Dobara login karein."
+          );
         }
 
         if (response.status === 403) {
-          throw new Error("Sirf admin task hide ya unhide kar sakta hai.");
+          throw new Error(
+            "Sirf admin task hide ya unhide kar sakta hai."
+          );
         }
 
-        throw new Error(data.message || "Task visibility update nahi ho saki.");
+        throw new Error(
+          data.message || "Task visibility update nahi ho saki."
+        );
       }
 
       setTasks((currentTasks) =>
@@ -353,7 +364,9 @@ function AdminTasks() {
                   <th className="px-5 py-4 font-semibold">Priority</th>
                   <th className="px-5 py-4 font-semibold">Status</th>
                   <th className="px-5 py-4 font-semibold">Visibility</th>
-                  <th className="px-5 py-4 text-right font-semibold">Action</th>
+                  <th className="px-5 py-4 text-right font-semibold">
+                    Action
+                  </th>
                 </tr>
               </thead>
 

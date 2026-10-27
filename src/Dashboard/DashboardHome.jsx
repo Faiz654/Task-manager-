@@ -11,14 +11,14 @@ import {
   FiRefreshCw,
 } from "react-icons/fi";
 
-const API_URL = "http://localhost:5000/api/tasks";
+const API_URL = "/api/tasks";
 
 function DashboardHome() {
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  // Fetch real tasks from the existing backend API
+  // Fetch real tasks from the backend API
   const fetchTasks = async () => {
     try {
       setLoading(true);
@@ -41,9 +41,7 @@ function DashboardHome() {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(
-          data.message || "Failed to fetch tasks."
-        );
+        throw new Error(data.message || "Failed to fetch tasks.");
       }
 
       setTasks(data.tasks || []);
@@ -106,10 +104,8 @@ function DashboardHome() {
     switch (status) {
       case "Completed":
         return "bg-emerald-50 text-emerald-700";
-
       case "In Progress":
         return "bg-amber-50 text-amber-700";
-
       default:
         return "bg-slate-100 text-slate-600";
     }
