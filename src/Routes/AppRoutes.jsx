@@ -2,9 +2,9 @@
 import { useLocation } from "react-router-dom";
 
 import PagesRoutes from "../Pages/PagesRoutes";
-import AuthRoutes from "../auth/AuthRoutes";
-import AdminPanelRoutes from "../admin/AdminPanelRoutes";
-import DashboardRoutes from "../dashboard/DashboardRoutes";
+import AuthRoutes from "../Auth/AuthRoutes";
+import AdminPanelRoutes from "../admin/adminPanelRoutes";
+import DashboardRoutes from "../Dashboard/DashboardRoutes";
 import ProtectedRoute from "./ProtectedRoute";
 
 function AppRoutes() {
